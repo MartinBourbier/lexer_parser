@@ -104,7 +104,7 @@ public final class Polynomial
 		return res;
 	}
 	
-	public static Polynomial divide(Polynomial p1, Polynomial p2)
+	public static Polynomial Divide(Polynomial p1, Polynomial p2)
 	{
 		if (p2.IsZero())
 			throw new ArithmeticException("Division by null polynomial.");
@@ -122,12 +122,35 @@ public final class Polynomial
 				return q;
 			
 			q = Add(q, t);
-			r = Multiply(Substract(r, t), p2);
+			r = Substract(r, Multiply(t, p2));
 			
 			--i;
 		}
 		
 		return q;
+	}
+
+	public static Polynomial Power(Polynomial p1, Polynomial p2)
+	{
+		if (p2.IsZero())
+			return new Polynomial(new Monomial(1));
+
+		Monomial lead = p2.GetLead();
+
+		if (lead.Degree() != 0)
+			throw new ArithmeticException("Power must be a constant.");
+
+		int n = lead.Coef();
+
+		if (n < 0)
+			throw new ArithmeticException("Power must be a non-negative constant.");
+
+		Polynomial res = p1;
+
+		for (int i = 1; i < n; ++i)
+			res = Multiply(res, p1);
+
+		return res;
 	}
 	
 	public Monomial GetLead()
@@ -141,7 +164,8 @@ public final class Polynomial
 	public int GetDegree()
 	{
 		Monomial lead = GetLead();
-		return ((Object) lead == null) ? -1 : lead.Degree();
+
+		return (lead == null) ? -1 : lead.Degree();
 	}
 	
 	@Override

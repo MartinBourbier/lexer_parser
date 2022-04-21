@@ -28,6 +28,10 @@ public final class Evaluator
                 res = Polynomial.Multiply(Evaluate(syntaxTree._left), Evaluate(syntaxTree._right));
                 break;
 
+            case SlashToken:
+                res = Polynomial.Divide(Evaluate(syntaxTree._left), Evaluate(syntaxTree._right));
+                break;
+
             case PlusToken:
                 res = Evaluate(syntaxTree._right);
                 break;

@@ -104,7 +104,7 @@ public final class Polynomial
 		return res;
 	}
 	
-	public static Polynomial divide(Polynomial p1, Polynomial p2)
+	public static Polynomial Divide(Polynomial p1, Polynomial p2)
 	{
 		if (p2.IsZero())
 			throw new ArithmeticException("Division by null polynomial.");

@@ -122,7 +122,7 @@ public final class Polynomial
 				return q;
 			
 			q = Add(q, t);
-			r = Multiply(Substract(r, t), p2);
+			r = Substract(r, Multiply(t, p2));
 			
 			--i;
 		}
@@ -141,7 +141,8 @@ public final class Polynomial
 	public int GetDegree()
 	{
 		Monomial lead = GetLead();
-		return ((Object) lead == null) ? -1 : lead.Degree();
+
+		return (lead == null) ? -1 : lead.Degree();
 	}
 	
 	@Override

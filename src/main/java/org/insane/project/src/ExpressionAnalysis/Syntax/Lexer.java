@@ -4,27 +4,28 @@ import java.util.LinkedList;
 
 public final class Lexer
 {
-    private static int _ReadNumber(String expression, int pos)
+    private static int[] _ReadNumber(String expression, int pos)
     {
         int val = 0;
+        int index = pos;
 
-        while (pos < expression.length())
+        while (index < expression.length())
         {
-            char c = expression.charAt(pos);
+            char c = expression.charAt(index);
 
             if (c >= '0' && c <= '9')
             {
-                ++pos;
+                ++index;
                 val = val * 10 + (int) (c - '0');
             }
             else
             {
-                --pos;
-                return val;
+                --index;
+                return new int[] { val, index };
             }
         }
 
-        return val;
+        return new int[] { val, index };
     }
 
     public static LinkedList<SyntaxToken> Run(String expression)
@@ -38,7 +39,12 @@ public final class Lexer
             SyntaxToken token = null;
 
             if (c >= '0' && c <= '9')
-                token = LexNumber(expression, res, pos);
+            {
+                Object[] objs = LexNumber(expression, res, pos);
+
+                token = (SyntaxToken) objs[0];
+                pos = (int) objs[1];
+            }
             else if (c == 'x')
                 token = LexVariable(res, pos);
             else if (c == '+')
@@ -274,15 +280,18 @@ public final class Lexer
                          last.IsKind(SyntaxKind.NumberToken));
 
         if (!valid)
-            throw new IllegalArgumentException("Invalid expression: token of type " + token + " found afer " + last + " (pos " + pos + ')');
+            throw new IllegalArgumentException("Invalid expression: token of type " + token + " found after " + last + " (pos " + pos + ')');
         else if (last != null && last.IsKind(SyntaxKind.NumberToken))
             res.addLast(new SyntaxToken(SyntaxKind.StarToken));
         return token;
     }
 
-    private static SyntaxToken LexNumber(String expression, LinkedList<SyntaxToken> res, int pos) {
+    private static Object[] LexNumber(String expression, LinkedList<SyntaxToken> res, int pos) {
         SyntaxToken token;
-        token = new SyntaxToken(SyntaxKind.NumberToken, _ReadNumber(expression, pos));
+
+        int[] num = _ReadNumber(expression, pos);
+
+        token = new SyntaxToken(SyntaxKind.NumberToken, num[0]);
 
         SyntaxToken last;
 
@@ -309,6 +318,6 @@ public final class Lexer
                  (last.IsKind(SyntaxKind.VariableToken) ||
                  last.IsKind(SyntaxKind.CloseParenthesisToken)))
             res.addLast(new SyntaxToken(SyntaxKind.StarToken));
-        return token;
+        return new Object[] { token, num[1] };
     }
 }

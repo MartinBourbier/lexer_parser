@@ -6,6 +6,6 @@ public class App
 {
     public static void main(String[] args) 
     {
-        System.out.println(Computation.Compute("1 + 2 * 3"));
+        System.out.println(Computation.Compute("(1 + 2) * 3"));
     }
 }

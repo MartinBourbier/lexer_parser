@@ -22,7 +22,6 @@ public final class Computation
             throw new IllegalArgumentException("Expression is empty");
 
         LinkedList<SyntaxToken> tokens = Lexer.Run(expression);
-        System.out.println(tokens);
 
         SyntaxTree syntaxTree = Parser.buildSyntaxTree(tokens);
 

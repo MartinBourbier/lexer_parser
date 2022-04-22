@@ -19,7 +19,6 @@ public final class Computation
         LinkedList<SyntaxToken> tokens = Lexer.Run(expression);
 
         SyntaxTree syntaxTree = Parser.buildSyntaxTree(tokens);
-        syntaxTree.PrettyPrint();
 
         Polynomial res = Evaluator.Evaluate(syntaxTree);
 

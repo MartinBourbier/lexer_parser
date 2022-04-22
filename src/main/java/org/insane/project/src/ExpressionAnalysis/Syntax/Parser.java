@@ -100,7 +100,15 @@ public final class Parser
               !top.IsKind(SyntaxKind.OpenParenthesisToken))
         {
             res.push(op.pop());
-            top = op.peek();
+
+            try
+            {
+                top = op.peek();
+            }
+            catch (Exception e)
+            {
+                top = null;
+            }
         }
 
         op.push(curr);

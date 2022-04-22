@@ -4,8 +4,26 @@ import org.insane.project.src.ExpressionAnalysis.Computation;
 
 public class App
 {
+    // TODO: op stack null on expression 13x + 1
+
     public static void main(String[] args) 
     {
-        System.out.println(Computation.Compute("(1 + 2) * 3"));
+        while (true)
+        {
+            System.out.print("Enter expression ('Enter' to exit): ");
+            String expression = System.console().readLine();
+            if (expression == null || expression.length() <= 0)
+                break;
+            try
+            {
+                System.out.println("Result: " + Computation.Compute(expression));
+            }
+            catch (Exception e)
+            {
+                System.out.println("Error: " + e.getMessage());
+            }
+        }
+
+        System.out.println("Bye!");
     }
 }

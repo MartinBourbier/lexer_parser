@@ -11,11 +11,6 @@ import org.insane.project.src.ExpressionAnalysis.Syntax.SyntaxTree;
 
 public final class Computation
 {
-    private Computation()
-    {
-        throw new UnsupportedOperationException();
-    }
-
     public static Polynomial Compute(String expression)
     {
         if (expression == null || expression.length() <= 0)
@@ -24,6 +19,7 @@ public final class Computation
         LinkedList<SyntaxToken> tokens = Lexer.Run(expression);
 
         SyntaxTree syntaxTree = Parser.buildSyntaxTree(tokens);
+        syntaxTree.PrettyPrint();
 
         Polynomial res = Evaluator.Evaluate(syntaxTree);
 

@@ -16,7 +16,16 @@ public final class Parser
         Stack<SyntaxToken> res = new Stack<SyntaxToken>();
         Stack<SyntaxToken> op = new Stack<SyntaxToken>();
 
-        SyntaxToken curr = tokens.getFirst();
+        SyntaxToken curr;
+
+        try
+        {
+            curr = tokens.removeFirst();
+        }
+        catch (Exception e)
+        {
+            curr = null;
+        }
 
         while (curr != null)
         {

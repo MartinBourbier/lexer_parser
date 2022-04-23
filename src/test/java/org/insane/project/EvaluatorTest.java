@@ -257,4 +257,216 @@ public class EvaluatorTest
     {
         Computation.Compute("1 - 3 -");
     }
+
+    @Test
+    public void NumberOnly_Mult_Lot()
+    {
+        Polynomial p = Computation.Compute("1*3  *2 *3");
+
+        Polynomial expected = new Polynomial(new Monomial(1 * 3 * 2 * 3));
+
+        assertTrue(PolyEquals(p, expected));
+    }
+
+    @Test
+    public void NumberOnly_Mult_Zero()
+    {
+        Polynomial p = Computation.Compute("1*0");
+
+        Polynomial expected = new Polynomial(new Monomial(0));
+
+        assertTrue(PolyEquals(p, expected));
+    }
+
+    @Test
+    public void NumberOnly_Mult_Zero_Long()
+    {
+        Polynomial p = Computation.Compute(" 1*0 *12345678 * 42");
+
+        Polynomial expected = new Polynomial(new Monomial(0));
+
+        assertTrue(PolyEquals(p, expected));
+    }
+
+    @Test
+    public void NumberOnly_MultDiv_NumberOnly_DivOnly()
+    {
+        Polynomial p = Computation.Compute("8/2");
+
+        Polynomial expected = new Polynomial(new Monomial(4));
+
+        assertTrue(PolyEquals(p, expected));
+    }
+
+    @Test
+    public void NumberOnly_MultDiv_NumberOnly_Lot()
+    {
+        Polynomial p = Computation.Compute("8/2*3");
+
+        Polynomial expected = new Polynomial(new Monomial(12));
+
+        assertTrue(PolyEquals(p, expected));
+    }
+
+    @Test
+    public void NumberOnly_MultDiv_Zero()
+    {
+        Polynomial p = Computation.Compute("46*5/ 46  / 5");
+
+        Polynomial expected = new Polynomial(new Monomial(1));
+
+        assertTrue(PolyEquals(p, expected));
+    }
+
+    @Test
+    public void NumberOnly_Mix_NotTrick()
+    {
+        Polynomial p = Computation.Compute("2*3 + 7");
+
+        Polynomial expected = new Polynomial(new Monomial(2 * 3 + 7));
+
+        assertTrue(PolyEquals(p, expected));
+    }
+
+    @Test
+    public void NumberOnly_Mix_PriorityTrick()
+    {
+        Polynomial p = Computation.Compute("7 + 2*3");
+
+        Polynomial expected = new Polynomial(new Monomial(7 + 2 * 3));
+
+        assertTrue(PolyEquals(p, expected));
+    }
+
+    @Test
+    public void NumberOnly_Mix_PriorityTrick_Mix()
+    {
+        Polynomial p = Computation.Compute("7 + 2*3 -2/2  + 14-2*3");
+
+        Polynomial expected = new Polynomial(new Monomial(7 + 2 * 3 - 2 / 2 + 14 - 2 * 3));
+
+        assertTrue(PolyEquals(p, expected));
+    }
+
+    @Test
+    public void WithVariable_SimpleMult_WithNumber()
+    {
+        Polynomial p = Computation.Compute("2*x");
+
+        Polynomial expected = new Polynomial(new Monomial(2, 1));
+
+        assertTrue(PolyEquals(p, expected));
+    }
+
+    @Test
+    public void WithVariable_SimpleMult_WithVariable()
+    {
+        Polynomial p = Computation.Compute("x*x*x");
+
+        Polynomial expected = new Polynomial(new Monomial(1, 3));
+
+        assertTrue(PolyEquals(p, expected));
+    }
+
+    @Test
+    public void WithVariable_Hard_NoDiv()
+    {
+        Polynomial p = Computation.Compute("2*x + 7 - x *x");
+
+        Polynomial expected = new Polynomial(new Monomial(7));
+        expected = Polynomial.Add(expected, new Polynomial(new Monomial(2, 1)));
+        expected = Polynomial.Add(expected, new Polynomial(new Monomial(-1, 2)));
+
+        assertTrue(PolyEquals(p, expected));
+    }
+
+    @Test(expected = ArithmeticException.class)
+    public void ErrorManagement_DivByZero()
+    {
+        Computation.Compute("3- 4 / 0");
+    }
+
+    @Test(expected = ArithmeticException.class)
+    public void ErrorManagement_DivByZero_Variable()
+    {
+        Computation.Compute("x / 0");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void ErrorManagement_MultipleMult()
+    {
+        Computation.Compute("4*x**2");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void ErrorManagement_MultipleMult_Far()
+    {
+        Computation.Compute("x *   * 2");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void ErrorManagement_MultipleDiv()
+    {
+        Computation.Compute("4*x//2");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void ErrorManagement_MultipleDiv_Far()
+    {
+        Computation.Compute("x /   / 2");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void ErrorManagement_LeadingOperator_Mult()
+    {
+        Computation.Compute(" * 1 + 2 + 3 ");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void ErrorManagement_LeadingOperator_Div()
+    {
+        Computation.Compute(" / 1 + 2 + 3 ");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void ErrorManagement_TrailingOperator_Mult()
+    {
+        Computation.Compute("1 + 2 + 3 * ");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void ErrorManagement_TrailingOperator_Div()
+    {
+        Computation.Compute("1 + 2 + 3 / ");
+    }
+
+    @Test
+    public void Implicit_Multiplication_VarAfterNumber()
+    {
+        Polynomial p = Computation.Compute("2x");
+
+        Polynomial expected = new Polynomial(new Monomial(2, 1));
+
+        assertTrue(PolyEquals(p, expected));
+    }
+
+    @Test
+    public void Implicit_Multiplication_NumberAfterVar()
+    {
+        Polynomial p = Computation.Compute("x2");
+
+        Polynomial expected = new Polynomial(new Monomial(2, 1));
+
+        assertTrue(PolyEquals(p, expected));
+    }
+
+    @Test
+    public void Implicit_Multiplication_Hard()
+    {
+        Polynomial p = Computation.Compute("x3x4x");
+
+        Polynomial expected = new Polynomial(new Monomial(12, 3));
+
+        assertTrue(PolyEquals(p, expected));
+    }
 }

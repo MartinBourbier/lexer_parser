@@ -4,8 +4,6 @@ import org.insane.project.src.ExpressionAnalysis.Computation;
 
 public class App
 {
-    // TODO: op stack null on expression 13x + 1
-
     public static void main(String[] args) 
     {
         while (true)

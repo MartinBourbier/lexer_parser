@@ -16,7 +16,16 @@ public final class Parser
         Stack<SyntaxToken> res = new Stack<SyntaxToken>();
         Stack<SyntaxToken> op = new Stack<SyntaxToken>();
 
-        SyntaxToken curr = tokens.getFirst();
+        SyntaxToken curr;
+
+        try
+        {
+            curr = tokens.removeFirst();
+        }
+        catch (Exception e)
+        {
+            curr = null;
+        }
 
         while (curr != null)
         {
@@ -56,7 +65,16 @@ public final class Parser
     private static void ParseExpression(Stack<SyntaxToken> res, Stack<SyntaxToken> op)
     {
         boolean found = false;
-        SyntaxToken top = op.pop();
+        SyntaxToken top;
+
+        try
+        {
+            top = op.pop();
+        }
+        catch (Exception e)
+        {
+            top = null;
+        }
 
         while (!found && top != null)
         {
@@ -65,7 +83,14 @@ public final class Parser
             else
                 res.push(top);
 
-            top = op.pop();
+            try
+            {
+                top = op.pop();
+            }
+            catch (Exception e)
+            {
+                top = null;
+            }
         }
 
         if (!found)
@@ -91,7 +116,15 @@ public final class Parser
               !top.IsKind(SyntaxKind.OpenParenthesisToken))
         {
             res.push(op.pop());
-            top = op.peek();
+
+            try
+            {
+                top = op.peek();
+            }
+            catch (Exception e)
+            {
+                top = null;
+            }
         }
 
         op.push(curr);

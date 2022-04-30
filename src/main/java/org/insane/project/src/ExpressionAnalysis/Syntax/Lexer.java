@@ -62,8 +62,20 @@ public final class Lexer
             else if (c == ')')
                 token = LexCloseParenthesis(res, pos);
             else if (c != ' ' && c != '\t' && c != '\r' && c != '\n')
-                throw new IllegalArgumentException("Invalid expression: token of type " + token + " found after token " + res.getLast() + " (pos " + pos +')');
+            {
+                SyntaxToken last;
 
+                try
+                {
+                    last = res.getLast();
+                }
+                catch (Exception e)
+                {
+                    last = null;
+                }
+
+                throw new IllegalArgumentException("Invalid expression: token of type " + token + " found after token " + last + " (pos " + pos +')');
+            }
             if (token != null)
                 res.addLast(token);
             

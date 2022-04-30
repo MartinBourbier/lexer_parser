@@ -1,11 +1,12 @@
 package org.insane.project.src;
 
-import org.insane.project.src.ExpressionAnalysis.Computation;
+import org.insane.project.src.ExpressionAnalysis.Interface.CalculatorBox;
 
 public class App
 {
-    public static void main(String[] args) 
+    public static void main(String[] args)
     {
-        System.out.println(Computation.Compute("(1 + 2) * 3"));
+        CalculatorBox calculatorBox = new CalculatorBox();
+        calculatorBox.setVisible(true);
     }
 }

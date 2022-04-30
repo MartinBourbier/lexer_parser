@@ -65,7 +65,16 @@ public final class Parser
     private static void ParseExpression(Stack<SyntaxToken> res, Stack<SyntaxToken> op)
     {
         boolean found = false;
-        SyntaxToken top = op.pop();
+        SyntaxToken top;
+
+        try
+        {
+            top = op.pop();
+        }
+        catch (Exception e)
+        {
+            top = null;
+        }
 
         while (!found && top != null)
         {
@@ -74,7 +83,14 @@ public final class Parser
             else
                 res.push(top);
 
-            top = op.pop();
+            try
+            {
+                top = op.pop();
+            }
+            catch (Exception e)
+            {
+                top = null;
+            }
         }
 
         if (!found)

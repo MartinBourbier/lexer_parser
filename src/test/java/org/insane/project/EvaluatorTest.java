@@ -469,4 +469,94 @@ public class EvaluatorTest
 
         assertTrue(PolyEquals(p, expected));
     }
+
+    @Test
+    public void Unary_NumberOnly_OneNumber_Minus_Simple()
+    {
+        Polynomial p = Computation.Compute("-1");
+
+        Polynomial expected = new Polynomial(new Monomial(-1));
+
+        assertTrue(PolyEquals(p, expected));
+    }
+
+    @Test
+    public void Unary_NumberOnly_OneNumber_Plus_Simple()
+    {
+        Polynomial p = Computation.Compute("+1");
+
+        Polynomial expected = new Polynomial(new Monomial(1));
+
+        assertTrue(PolyEquals(p, expected));
+    }
+
+    @Test
+    public void Unary_NumberOnly_OneNumber_Minus_Multiple_Even()
+    {
+        Polynomial p = Computation.Compute("--------3");
+
+        Polynomial expected = new Polynomial(new Monomial(3));
+
+        assertTrue(PolyEquals(p, expected));
+    }
+
+    @Test
+    public void Unary_NumberOnly_OneNumber_Minus_Multiple_Odd()
+    {
+        Polynomial p = Computation.Compute("-------3");
+
+        Polynomial expected = new Polynomial(new Monomial(-3));
+
+        assertTrue(PolyEquals(p, expected));
+    }
+
+    @Test
+    public void Unary_NumberOnly_OneNumber_Plus_Multiple()
+    {
+        Polynomial p = Computation.Compute("+++++3");
+
+        Polynomial expected = new Polynomial(new Monomial(3));
+
+        assertTrue(PolyEquals(p, expected));
+    }
+
+    @Test
+    public void Unary_NumberOnly_OneNumber_Mix_Simple()
+    {
+        Polynomial p = Computation.Compute("+-3");
+
+        Polynomial expected = new Polynomial(new Monomial(-3));
+
+        assertTrue(PolyEquals(p, expected));
+    }
+
+    @Test
+    public void Unary_NumberOnly_OneNumber_Mix_Simple_Bis()
+    {
+        Polynomial p = Computation.Compute("-+3");
+
+        Polynomial expected = new Polynomial(new Monomial(-3));
+
+        assertTrue(PolyEquals(p, expected));
+    }
+
+    // @Test
+    // public void Unary_NumberOnly_OneNumber_Minus_Parenthesis()
+    // {
+    //     Polynomial p = Computation.Compute("-(3)");
+
+    //     Polynomial expected = new Polynomial(new Monomial(-3));
+
+    //     assertTrue(PolyEquals(p, expected));
+    // }
+
+    @Test
+    public void Unary_NumberOnly_OneNumber_Plus_Parenthesis()
+    {
+        Polynomial p = Computation.Compute("+(3)");
+
+        Polynomial expected = new Polynomial(new Monomial(3));
+
+        assertTrue(PolyEquals(p, expected));
+    }
 }

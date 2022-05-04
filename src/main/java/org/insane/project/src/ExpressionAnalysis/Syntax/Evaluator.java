@@ -9,7 +9,6 @@ public final class Evaluator
         throw new UnsupportedOperationException();
     }
 
-
     public static Polynomial Evaluate(SyntaxTree syntaxTree)
     {
         Polynomial res = new Polynomial();

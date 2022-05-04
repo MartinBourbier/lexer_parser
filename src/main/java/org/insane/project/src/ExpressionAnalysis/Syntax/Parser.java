@@ -8,7 +8,6 @@ public final class Parser
     // This class can not be instanciated nor inherited from
     private Parser()
     {
-        throw new UnsupportedOperationException();
     }
 
     private static Stack<SyntaxToken> _ToPolishNotation(LinkedList<SyntaxToken> tokens)

@@ -4,6 +4,11 @@ import java.util.LinkedList;
 
 public final class Lexer
 {
+    // This class can not be instanciated nor inherited from
+    private Lexer()
+    {
+    }
+
     private static int[] _ReadNumber(String expression, int pos)
     {
         int val = 0;

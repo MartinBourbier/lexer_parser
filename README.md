@@ -16,3 +16,13 @@ Then, run `java -jar target/arithmetic-parser-1.0-SNAPSHOT-jar-with-dependencies
 
 
 ![](pipeline.png)
+
+## Packages
+
+The main package is the `ExpressionAnalysis` package.
+
+It contains the `ArithmeticPackage`, the `Interface` package and the `Syntax` package along the `Computation` API.
+
+To use the software in a java project, the import `org.insane.project.src.ExpressionAnalysis.Computation`
+And to process the arithmetic expression, use the `Compute` static method.
+`Computation.Compute("1 + 2 * 3) = 7`

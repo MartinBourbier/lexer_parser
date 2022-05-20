@@ -1,5 +1,7 @@
 # Arithmetic Parser
 
+Implementation of a simple arithmetic parser in Java
+
 ## Run
 
 Maven is required to run the project/
